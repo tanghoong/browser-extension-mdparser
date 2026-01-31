@@ -27,8 +27,40 @@
     isRendered: true,
     rawContent: '',
     container: null,
-    badge: null
+    badge: null,
+    cssInjected: false
   };
+
+  /**
+   * CSS files to inject when markdown is detected
+   */
+  const CSS_FILES = [
+    'styles.css',
+    'lib/highlight-github.min.css',
+    'lib/chat-blocks.css',
+    'lib/phase5-styles.css',
+    'lib/phase6-styles.css',
+    'lib/tts-player.css',
+    'lib/toolbar-controls.css'
+  ];
+
+  /**
+   * Dynamically inject CSS files only when markdown is detected
+   * This prevents styles from affecting non-markdown pages
+   */
+  function injectCSS() {
+    if (STATE.cssInjected) return;
+    
+    CSS_FILES.forEach(cssFile => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = chrome.runtime.getURL(cssFile);
+      document.head.appendChild(link);
+    });
+    
+    STATE.cssInjected = true;
+  }
 
   /**
    * Check if URL ends with markdown extension
@@ -1035,6 +1067,9 @@
    */
   async function displayRenderedContent(markdown) {
     try {
+      // Inject CSS only when we're actually rendering markdown
+      injectCSS();
+      
       // Store raw content for toggle (both STATE and global for toolbar)
       STATE.rawContent = markdown;
       window.__mdParserRawContent = markdown;

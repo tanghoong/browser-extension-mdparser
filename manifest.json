@@ -29,15 +29,6 @@
         "lib/toolbar-controls.js",
         "content.js"
       ],
-      "css": [
-        "styles.css",
-        "lib/highlight-github.min.css",
-        "lib/chat-blocks.css",
-        "lib/phase5-styles.css",
-        "lib/phase6-styles.css",
-        "lib/tts-player.css",
-        "lib/toolbar-controls.css"
-      ],
       "run_at": "document_end"
     }
   ],
@@ -49,7 +40,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["lib/*"],
+      "resources": ["lib/*", "styles.css"],
       "matches": ["<all_urls>", "file://*/*"]
     }
   ]
