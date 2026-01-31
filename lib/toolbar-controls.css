@@ -79,18 +79,26 @@
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* MD Logo Button - special styling */
+/* MD Logo Button - special styling (blue, separated) */
 .md-toolbar-btn.md-logo-btn {
   font-size: 12px;
   font-weight: 700;
-  color: #171717;
+  color: #ffffff;
+  background: #2563eb;
   width: auto;
   padding: 0 8px;
+  margin-left: 6px;
+  border-radius: 6px;
 }
 
 .md-toolbar-btn.md-logo-btn svg {
   width: 18px;
   height: 18px;
+}
+
+.md-toolbar-btn.md-logo-btn:hover {
+  background: #1d4ed8;
+  color: #ffffff;
 }
 
 /* Hover state */
@@ -133,7 +141,12 @@
 }
 
 [data-theme="dark"] .md-toolbar-btn.md-logo-btn {
-  color: #fafafa;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .md-toolbar-btn.md-logo-btn:hover {
+  background: #1d4ed8;
 }
 
 [data-theme="dark"] .md-toolbar-btn:hover {
