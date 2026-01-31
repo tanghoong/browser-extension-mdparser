@@ -105,20 +105,27 @@ button svg,
 
 /* Reset and base container */
 .md-parser-container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.7;
-  color: #202124;
+  /* Inter is a highly readable, modern font family perfect for content */
+  /* Falls back to SF Pro (Apple), Segoe UI (Windows), then system fonts */
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.75;
+  color: #1a1a1a;
   background-color: #f5f5f5;
   max-width: 900px;
   margin: 0 auto;
   padding: 48px 60px;
   box-sizing: border-box;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.011em;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Page body background */
 body {
   background-color: #ebebeb;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* Typography - Headings */
@@ -247,8 +254,9 @@ body {
   margin: 0;
   font-size: 85%;
   background-color: rgba(27, 31, 35, 0.05);
-  border-radius: 3px;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
 /* Code - Block */
@@ -256,13 +264,15 @@ body {
   padding: 16px;
   overflow: auto;
   font-size: 13px;
-  line-height: 1.45;
+  line-height: 1.6;
   background-color: #2d2d2d;
   border-radius: 8px;
   margin-top: 0;
   margin-bottom: 16px;
   color: #e0e0e0;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
 .md-parser-container pre code {
@@ -1145,126 +1155,126 @@ body:has(.toc-container:not(.collapsed)) .md-parser-container {
   border: none;
 }
 
-/* Audio Player */
+/* Audio Player - iOS Style */
 .audio-player-wrapper {
   margin: 24px 0;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+  padding: 16px;
+  background: #f2f2f7;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   position: relative;
   overflow: hidden;
-}
-
-.audio-player-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-  pointer-events: none;
 }
 
 .audio-label {
   font-size: 15px;
   font-weight: 600;
-  color: white;
-  margin-bottom: 16px;
+  color: #1c1c1e;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
+  gap: 10px;
   position: relative;
   z-index: 1;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .audio-label::before {
   content: '';
   display: inline-flex;
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #ff2d55 0%, #ff375f 100%);
+  border-radius: 8px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-}
-
-.audio-label::after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 5px 0 5px 8px;
-  border-color: transparent transparent transparent rgba(255, 255, 255, 0.9);
-  margin-left: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .audio-player {
   width: 100%;
-  height: 48px;
+  height: 44px;
   outline: none;
   position: relative;
   z-index: 1;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  background: #ffffff;
 }
 
 .audio-player::-webkit-media-controls-panel {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0 8px;
 }
 
-.audio-player::-webkit-media-controls-play-button,
+.audio-player::-webkit-media-controls-play-button {
+  background-color: #ff2d55;
+  border-radius: 50%;
+  transform: scale(1.1);
+}
+
 .audio-player::-webkit-media-controls-current-time-display,
 .audio-player::-webkit-media-controls-time-remaining-display {
-  color: #667eea;
+  color: #8e8e93;
+  font-size: 12px;
 }
 
 .audio-player::-webkit-media-controls-timeline {
   border-radius: 4px;
-  background: rgba(102, 126, 234, 0.2);
+  background: #e5e5ea;
+  height: 4px;
 }
 
 .audio-player::-webkit-media-controls-volume-slider {
   border-radius: 4px;
-  background: rgba(102, 126, 234, 0.2);
+  background: #e5e5ea;
 }
 
-/* Dark mode audio player adjustments */
-body.dark-mode .audio-player-wrapper {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+/* Dark mode audio player */
+[data-theme="dark"] .audio-player-wrapper {
+  background: #1c1c1e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-body.dark-mode .audio-player::-webkit-media-controls-panel {
-  background: rgba(30, 30, 30, 0.95);
+[data-theme="dark"] .audio-label {
+  color: #f2f2f7;
 }
 
-body.dark-mode .audio-player::-webkit-media-controls-play-button,
-body.dark-mode .audio-player::-webkit-media-controls-current-time-display,
-body.dark-mode .audio-player::-webkit-media-controls-time-remaining-display {
-  color: #a8b3ff;
+[data-theme="dark"] .audio-player {
+  background: #2c2c2e;
 }
 
-/* Chat Block */
+[data-theme="dark"] .audio-player::-webkit-media-controls-panel {
+  background: #2c2c2e;
+}
+
+[data-theme="dark"] .audio-player::-webkit-media-controls-current-time-display,
+[data-theme="dark"] .audio-player::-webkit-media-controls-time-remaining-display {
+  color: #8e8e93;
+}
+
+[data-theme="dark"] .audio-player::-webkit-media-controls-timeline {
+  background: #3a3a3c;
+}
+
+[data-theme="dark"] .audio-player::-webkit-media-controls-volume-slider {
+  background: #3a3a3c;
+}
+
+/* Chat Block - iOS Style */
 .chat-block {
   margin: 24px 0;
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
 }
 
 .chat-header {
-  padding: 12px 16px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1273,24 +1283,37 @@ body.dark-mode .audio-player::-webkit-media-controls-time-remaining-display {
 }
 
 .chat-theme-badge {
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .chat-theme-icon {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .chat-messages {
   padding: 16px;
-  min-height: 100px;
+  min-height: 80px;
 }
 
 .chat-bubble {
-  margin: 8px 0;
-  max-width: 75%;
+  margin: 10px 0;
+  max-width: 80%;
   clear: both;
+  animation: bubbleIn 0.3s ease-out;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .chat-left {
@@ -1299,117 +1322,173 @@ body.dark-mode .audio-player::-webkit-media-controls-time-remaining-display {
 
 .chat-right {
   float: right;
+  text-align: right;
 }
 
 .chat-user {
   font-size: 11px;
   font-weight: 600;
   margin-bottom: 4px;
-  opacity: 0.7;
+  padding: 0 4px;
 }
 
 .chat-text {
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: 18px;
   word-wrap: break-word;
   line-height: 1.4;
-  font-size: 14px;
+  font-size: 15px;
+  position: relative;
 }
 
-/* WhatsApp Theme */
+.chat-left .chat-text {
+  border-bottom-left-radius: 4px;
+}
+
+.chat-right .chat-text {
+  border-bottom-right-radius: 4px;
+}
+
+/* ===== WhatsApp Theme ===== */
 .chat-theme-whatsapp .chat-header {
-  background: #075e54;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
 }
 
 .chat-theme-whatsapp .chat-messages {
-  background: #ece5dd;
+  background: #e5ddd5;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L30 60M0 30L60 30' stroke='%23d4ccc4' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+}
+
+.chat-theme-whatsapp .chat-user {
+  color: #075e54;
 }
 
 .chat-theme-whatsapp .chat-left .chat-text {
-  background: white;
-  color: #000;
+  background: #ffffff;
+  color: #262626;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
 .chat-theme-whatsapp .chat-right .chat-text {
   background: #dcf8c6;
-  color: #000;
+  color: #262626;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
-/* Telegram Theme */
+/* ===== Telegram Theme ===== */
 .chat-theme-telegram .chat-header {
-  background: #0088cc;
+  background: linear-gradient(135deg, #0088cc 0%, #229ed9 100%);
 }
 
 .chat-theme-telegram .chat-messages {
-  background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(180deg, #7aa5d2 0%, #9ec4e8 50%, #ccdff0 100%);
+}
+
+.chat-theme-telegram .chat-user {
+  color: #168acd;
 }
 
 .chat-theme-telegram .chat-left .chat-text {
-  background: white;
-  color: #000;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .chat-theme-telegram .chat-right .chat-text {
-  background: #3390ec;
-  color: white;
+  background: #effdde;
+  color: #000000;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* iMessage Theme */
+/* ===== iMessage Theme ===== */
 .chat-theme-imessage .chat-header {
-  background: #3478f6;
+  background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
 }
 
 .chat-theme-imessage .chat-messages {
-  background: white;
+  background: #ffffff;
+}
+
+.chat-theme-imessage .chat-user {
+  color: #8e8e93;
 }
 
 .chat-theme-imessage .chat-left .chat-text {
   background: #e5e5ea;
-  color: #000;
+  color: #000000;
 }
 
 .chat-theme-imessage .chat-right .chat-text {
-  background: #3478f6;
-  color: white;
+  background: linear-gradient(135deg, #007aff 0%, #5ac8fa 100%);
+  color: #ffffff;
 }
 
-/* Slack Theme */
+/* ===== Slack Theme ===== */
 .chat-theme-slack .chat-header {
-  background: #4a154b;
+  background: linear-gradient(135deg, #4a154b 0%, #611f69 100%);
 }
 
 .chat-theme-slack .chat-messages {
-  background: #f8f8f8;
+  background: #ffffff;
+  padding: 12px 16px;
 }
 
-.chat-theme-slack .chat-left .chat-user,
-.chat-theme-slack .chat-right .chat-user {
-  font-weight: 700;
-  opacity: 1;
-  color: #1264a3;
+.chat-theme-slack .chat-bubble {
+  max-width: 100%;
+  float: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.chat-theme-slack .chat-bubble:first-child {
+  border-top: none;
+}
+
+.chat-theme-slack .chat-user {
+  font-weight: 900;
+  color: #1d1c1d;
+  font-size: 14px;
   margin-bottom: 2px;
 }
 
 .chat-theme-slack .chat-text {
   background: transparent;
-  padding: 4px 0;
+  padding: 0;
   border-radius: 0;
   color: #1d1c1d;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-/* Discord Theme */
+.chat-theme-slack .chat-left,
+.chat-theme-slack .chat-right {
+  text-align: left;
+}
+
+/* ===== Discord Theme ===== */
 .chat-theme-discord .chat-header {
-  background: #5865f2;
+  background: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
 }
 
 .chat-theme-discord .chat-messages {
   background: #36393f;
+  padding: 12px 16px;
 }
 
-.chat-theme-discord .chat-left .chat-user,
-.chat-theme-discord .chat-right .chat-user {
+.chat-theme-discord .chat-bubble {
+  max-width: 100%;
+  float: none;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+
+.chat-theme-discord .chat-user {
   font-weight: 600;
-  opacity: 1;
+  font-size: 14px;
   margin-bottom: 2px;
 }
 
@@ -1423,9 +1502,16 @@ body.dark-mode .audio-player::-webkit-media-controls-time-remaining-display {
 
 .chat-theme-discord .chat-text {
   background: transparent;
-  padding: 4px 0;
+  padding: 2px 0;
   border-radius: 0;
   color: #dcddde;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chat-theme-discord .chat-left,
+.chat-theme-discord .chat-right {
+  text-align: left;
 }
 
 /* Clear floats */
@@ -1434,6 +1520,84 @@ body.dark-mode .audio-player::-webkit-media-controls-time-remaining-display {
   display: table;
   clear: both;
 }
+
+/* ===== Dark Mode Chat Themes ===== */
+[data-theme="dark"] .chat-block {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .chat-theme-whatsapp .chat-messages {
+  background: #0b141a;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L30 60M0 30L60 30' stroke='%23172620' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .chat-theme-whatsapp .chat-user {
+  color: #00a884;
+}
+
+[data-theme="dark"] .chat-theme-whatsapp .chat-left .chat-text {
+  background: #202c33;
+  color: #e9edef;
+}
+
+[data-theme="dark"] .chat-theme-whatsapp .chat-right .chat-text {
+  background: #005c4b;
+  color: #e9edef;
+}
+
+[data-theme="dark"] .chat-theme-telegram .chat-messages {
+  background: linear-gradient(180deg, #1e3a5f 0%, #17212b 100%);
+}
+
+[data-theme="dark"] .chat-theme-telegram .chat-user {
+  color: #6ab2f2;
+}
+
+[data-theme="dark"] .chat-theme-telegram .chat-left .chat-text {
+  background: #182533;
+  color: #f5f5f5;
+}
+
+[data-theme="dark"] .chat-theme-telegram .chat-right .chat-text {
+  background: #2b5278;
+  color: #f5f5f5;
+}
+
+[data-theme="dark"] .chat-theme-imessage .chat-messages {
+  background: #000000;
+}
+
+[data-theme="dark"] .chat-theme-imessage .chat-user {
+  color: #8e8e93;
+}
+
+[data-theme="dark"] .chat-theme-imessage .chat-left .chat-text {
+  background: #3a3a3c;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .chat-theme-imessage .chat-right .chat-text {
+  background: linear-gradient(135deg, #007aff 0%, #5ac8fa 100%);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .chat-theme-slack .chat-messages {
+  background: #1a1d21;
+}
+
+[data-theme="dark"] .chat-theme-slack .chat-bubble {
+  border-top-color: #2c2f33;
+}
+
+[data-theme="dark"] .chat-theme-slack .chat-user {
+  color: #e8e8e8;
+}
+
+[data-theme="dark"] .chat-theme-slack .chat-text {
+  color: #d1d2d3;
+}
+
+/* Discord stays the same in dark mode as it's already dark */
 
 /* ==============================================
    Phase 4: Interactive Features

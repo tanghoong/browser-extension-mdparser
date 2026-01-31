@@ -1082,7 +1082,10 @@
       embedYouTubeVideos(container);
       embedAudioPlayers(container);
       
-      // Process chat blocks (Slack & Discord styling)
+      // Process chatblock code blocks (WHATSAPP, TELEGRAM, IMESSAGE, SLACK, DISCORD)
+      processChatBlocks(container);
+      
+      // Process chat blocks (Slack & Discord styled) via ChatBlockManager
       if (window.ChatBlockManager) {
         window.ChatBlockManager.init();
       }
