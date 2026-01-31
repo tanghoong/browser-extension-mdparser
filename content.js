@@ -315,6 +315,131 @@
       });
       
       wrapper.appendChild(copyCodeBtn);
+      
+      // Download as PNG button
+      const downloadPNGBtn = document.createElement('button');
+      downloadPNGBtn.className = 'download-mermaid-btn';
+      downloadPNGBtn.textContent = 'Download PNG';
+      downloadPNGBtn.title = 'Download diagram as PNG image';
+      
+      downloadPNGBtn.addEventListener('click', async () => {
+        try {
+          const svgElement = mermaidDiv.querySelector('svg');
+          if (!svgElement) {
+            console.error('No SVG found in mermaid diagram');
+            return;
+          }
+          
+          // Clone the SVG to avoid modifying the original
+          const svgClone = svgElement.cloneNode(true);
+          
+          // Get dimensions
+          const bbox = svgElement.getBBox();
+          const width = bbox.width || svgElement.clientWidth || 800;
+          const height = bbox.height || svgElement.clientHeight || 600;
+          
+          // Set explicit dimensions on clone
+          svgClone.setAttribute('width', width);
+          svgClone.setAttribute('height', height);
+          
+          // Remove any external image references that might cause CORS issues
+          const images = svgClone.querySelectorAll('image');
+          images.forEach(img => {
+            // Only keep data URLs, remove external URLs
+            const href = img.getAttribute('href') || img.getAttribute('xlink:href');
+            if (href && !href.startsWith('data:')) {
+              img.remove();
+            }
+          });
+          
+          // Inline all styles to avoid external CSS references
+          const styleElements = svgClone.querySelectorAll('style');
+          styleElements.forEach(style => {
+            // Keep inline styles
+            if (style.textContent) {
+              style.textContent = style.textContent.replace(/@import[^;]+;/g, '');
+            }
+          });
+          
+          // Serialize SVG to string
+          const svgString = new XMLSerializer().serializeToString(svgClone);
+          const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+          const svgUrl = URL.createObjectURL(svgBlob);
+          
+          // Create canvas
+          const canvas = document.createElement('canvas');
+          canvas.width = width * 2; // 2x for better quality
+          canvas.height = height * 2;
+          const ctx = canvas.getContext('2d');
+          
+          // Set white background
+          ctx.fillStyle = 'white';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          // Load and draw SVG
+          const img = new Image();
+          
+          // Enable CORS for the image
+          img.crossOrigin = 'anonymous';
+          
+          img.onload = () => {
+            try {
+              ctx.scale(2, 2);
+              ctx.drawImage(img, 0, 0);
+              
+              // Convert to PNG with error handling
+              try {
+                canvas.toBlob((blob) => {
+                  if (!blob) {
+                    throw new Error('Failed to create blob');
+                  }
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `mermaid-diagram-${Date.now()}.png`;
+                  a.click();
+                  
+                  // Cleanup
+                  URL.revokeObjectURL(url);
+                  URL.revokeObjectURL(svgUrl);
+                  
+                  downloadPNGBtn.textContent = 'Downloaded!';
+                  setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+                }, 'image/png');
+              } catch (blobError) {
+                // Fallback: Download SVG instead if canvas is tainted
+                console.warn('Canvas tainted, downloading SVG instead:', blobError);
+                const a = document.createElement('a');
+                a.href = svgUrl;
+                a.download = `mermaid-diagram-${Date.now()}.svg`;
+                a.click();
+                URL.revokeObjectURL(svgUrl);
+                
+                downloadPNGBtn.textContent = 'Downloaded SVG';
+                setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+              }
+            } catch (drawError) {
+              console.error('Failed to draw image:', drawError);
+              throw drawError;
+            }
+          };
+          
+          img.onerror = () => {
+            console.error('Failed to load SVG for PNG conversion');
+            downloadPNGBtn.textContent = 'Error!';
+            setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+            URL.revokeObjectURL(svgUrl);
+          };
+          
+          img.src = svgUrl;
+        } catch (err) {
+          console.error('Failed to download PNG:', err);
+          downloadPNGBtn.textContent = 'Error!';
+          setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+        }
+      });
+      
+      wrapper.appendChild(downloadPNGBtn);
     });
   }
 
@@ -330,10 +455,12 @@
     
     const tocContainer = document.createElement('div');
     tocContainer.className = 'toc-container';
+    const tocIconHTML = window.SVGIcons ? window.SVGIcons.getHTML('list') : '📑';
+    const toggleIconHTML = window.SVGIcons ? window.SVGIcons.getHTML('chevronLeft') : '◀';
     tocContainer.innerHTML = `
       <div class="toc-header">
-        <span class="toc-title">📑 Contents</span>
-        <button class="toc-toggle" title="Toggle TOC">◀</button>
+        <span class="toc-title">${tocIconHTML} <span>Contents</span></span>
+        <button class="toc-toggle" title="Toggle TOC">${toggleIconHTML}</button>
       </div>
       <nav class="toc-nav"></nav>
     `;
@@ -516,16 +643,41 @@
       wrapper.className = 'youtube-embed-wrapper';
       wrapper.setAttribute('data-video-id', videoId);
       
-      const iframe = document.createElement('iframe');
-      iframe.className = 'youtube-embed';
-      iframe.src = `https://www.youtube.com/embed/${videoId}`;
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      // Create offline placeholder with play button overlay
+      const placeholder = document.createElement('a');
+      placeholder.href = link.href;
+      placeholder.target = '_blank';
+      placeholder.className = 'youtube-placeholder';
+      placeholder.title = 'Click to open on YouTube';
       
-      wrapper.appendChild(iframe);
+      // Thumbnail image (YouTube provides thumbnails)
+      const thumbnail = document.createElement('img');
+      thumbnail.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      thumbnail.alt = 'YouTube Video Thumbnail';
+      thumbnail.className = 'youtube-thumbnail';
       
-      // Replace link with embedded player
+      // Play button overlay
+      const playOverlay = document.createElement('div');
+      playOverlay.className = 'youtube-play-overlay';
+      
+      // Use SVG play icon if available
+      if (window.SVGIcons) {
+        playOverlay.innerHTML = window.SVGIcons.getHTML('playCircle');
+      } else {
+        playOverlay.innerHTML = '<div class="youtube-play-icon">▶</div>';
+      }
+      
+      // Video title overlay
+      const titleOverlay = document.createElement('div');
+      titleOverlay.className = 'youtube-title-overlay';
+      titleOverlay.textContent = link.textContent || 'Watch on YouTube';
+      
+      placeholder.appendChild(thumbnail);
+      placeholder.appendChild(playOverlay);
+      placeholder.appendChild(titleOverlay);
+      wrapper.appendChild(placeholder);
+      
+      // Replace link with placeholder
       const parent = link.parentElement;
       if (parent.tagName === 'P' && parent.childNodes.length === 1) {
         parent.parentNode.replaceChild(wrapper, parent);
@@ -846,7 +998,7 @@
   function createScrollToTopButton() {
     const button = document.createElement('button');
     button.className = 'scroll-to-top';
-    button.innerHTML = '↑';
+    button.innerHTML = window.SVGIcons ? window.SVGIcons.getHTML('arrowUp') : '↑';
     button.title = 'Scroll to top';
     button.style.display = 'none';
     
@@ -926,7 +1078,7 @@
       // Create badge
       const badge = document.createElement('div');
       badge.className = 'md-parser-badge';
-      badge.textContent = 'MD';
+      badge.innerHTML = window.SVGIcons ? window.SVGIcons.getHTML('markdown') : 'MD';
       badge.title = 'Rendered by Markdown Parser (Click to toggle raw)';
 
       // Add elements to body
@@ -962,7 +1114,11 @@
       // Embed multimedia (Phase 3)
       embedYouTubeVideos(container);
       embedAudioPlayers(container);
-      processChatBlocks(container);
+      
+      // Process chat blocks (Slack & Discord styling)
+      if (window.ChatBlockManager) {
+        window.ChatBlockManager.init();
+      }
 
       // Setup badge toggle
       setupBadgeToggle(badge, container, markdown);
@@ -972,6 +1128,25 @@
 
       // Enhance image rendering
       enhanceImageRendering(container);
+
+      // Phase 5: Prepare presentation mode if slides detected
+      if (window.prepareSlides && window.PresentationManager) {
+        const slidesPrepared = prepareSlides(container, markdown, renderMarkdown);
+        if (!slidesPrepared) {
+          // No slides detected, continue normal rendering
+        }
+      }
+
+      // Phase 6: Initialize advanced UI features
+      if (window.DarkModeManager) {
+        DarkModeManager.init();
+      }
+      if (window.DocumentSearchManager) {
+        DocumentSearchManager.init();
+      }
+      if (window.ReadingProgressManager) {
+        ReadingProgressManager.init();
+      }
 
       // Set page title from first h1 if available
       const h1 = container.querySelector('h1');

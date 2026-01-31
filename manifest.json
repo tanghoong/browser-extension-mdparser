@@ -21,11 +21,18 @@
         "lib/marked.min.js",
         "lib/mermaid.min.js",
         "lib/highlight.min.js",
+        "lib/svg-icons.js",
+        "lib/chat-blocks.js",
+        "lib/presentation-mode.js",
+        "lib/phase6-features.js",
         "content.js"
       ],
       "css": [
         "styles.css",
-        "lib/highlight-github.min.css"
+        "lib/highlight-github.min.css",
+        "lib/chat-blocks.css",
+        "lib/phase5-styles.css",
+        "lib/phase6-styles.css"
       ],
       "run_at": "document_end"
     }

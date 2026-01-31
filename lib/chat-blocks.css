@@ -1,0 +1,228 @@
+/**
+ * Chat Blocks Styling
+ * Slack and Discord styled chat messages
+ */
+
+/* === Base Chat Block Styles === */
+.chat-block {
+  margin: 1.5em 0;
+  padding: 1.5em;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.chat-message:last-child {
+  margin-bottom: 0;
+}
+
+.chat-message:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.chat-avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  user-select: none;
+}
+
+.chat-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.chat-username {
+  font-weight: 600;
+  font-size: 15px;
+  color: #1d1c1d;
+}
+
+.chat-time {
+  font-size: 12px;
+  color: #616061;
+}
+
+.chat-body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1d1c1d;
+  word-wrap: break-word;
+}
+
+.chat-body code {
+  background-color: rgba(29, 28, 29, 0.04);
+  border: 1px solid rgba(29, 28, 29, 0.13);
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 13px;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+}
+
+.chat-body strong {
+  font-weight: 700;
+}
+
+.chat-body a {
+  color: #1264a3;
+  text-decoration: none;
+}
+
+.chat-body a:hover {
+  text-decoration: underline;
+}
+
+.chat-mention {
+  background-color: #1264a3;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.chat-channel {
+  color: #1264a3;
+  font-weight: 500;
+}
+
+/* === Slack Specific Styles === */
+.chat-slack {
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+}
+
+.chat-slack .chat-avatar {
+  border-radius: 4px;
+}
+
+.chat-slack .chat-username {
+  color: #1d1c1d;
+  font-weight: 900;
+}
+
+.chat-slack .chat-time {
+  color: #616061;
+  font-size: 12px;
+}
+
+.chat-slack .chat-message:hover {
+  background-color: #f8f8f8;
+}
+
+/* === Discord Specific Styles === */
+.chat-discord {
+  background-color: #36393f;
+  border: 1px solid #2f3136;
+}
+
+.chat-discord .chat-avatar {
+  border-radius: 50%;
+}
+
+.chat-discord .chat-message:hover {
+  background-color: #32353b;
+}
+
+.chat-discord .chat-username {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.chat-discord .chat-time {
+  color: #72767d;
+  font-size: 12px;
+}
+
+.chat-discord .chat-body {
+  color: #dcddde;
+}
+
+.chat-discord .chat-body code {
+  background-color: #2f3136;
+  border-color: #202225;
+  color: #dcddde;
+}
+
+.chat-discord .chat-body a {
+  color: #00b0f4;
+}
+
+.chat-discord .chat-mention {
+  background-color: rgba(88, 101, 242, 0.3);
+  color: #dee0fc;
+}
+
+.chat-discord .chat-channel {
+  color: #00b0f4;
+}
+
+/* === Dark Mode Adjustments === */
+body.dark-mode .chat-slack {
+  background-color: #1a1d21;
+  border-color: #2f3136;
+}
+
+body.dark-mode .chat-slack .chat-username {
+  color: #e8e8e8;
+}
+
+body.dark-mode .chat-slack .chat-body {
+  color: #dcddde;
+}
+
+body.dark-mode .chat-slack .chat-message:hover {
+  background-color: #2a2d31;
+}
+
+body.dark-mode .chat-slack .chat-body code {
+  background-color: #2f3136;
+  border-color: #202225;
+  color: #dcddde;
+}
+
+/* Discord stays the same in dark mode as it's already dark */
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .chat-block {
+    padding: 1em;
+    margin: 1em 0;
+  }
+  
+  .chat-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  .chat-username {
+    font-size: 14px;
+  }
+  
+  .chat-body {
+    font-size: 14px;
+  }
+}

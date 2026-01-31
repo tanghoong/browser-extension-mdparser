@@ -13,8 +13,8 @@ Transform the browser into a powerful Markdown viewer with presentation capabili
 ## 📊 Current Status
 
 **Version:** 1.0.0  
-**Status:** Phase 3 Complete ✅  
-**Last Updated:** January 2025
+**Status:** Phase 6 Complete ✅  
+**Last Updated:** January 2026
 
 ### Core Functionality ✅
 - ✅ Auto-detect and render `.md` and `.txt` files
@@ -42,6 +42,25 @@ Transform the browser into a powerful Markdown viewer with presentation capabili
 - ✅ Audio file players (MP3, WAV, OGG, M4A, FLAC)
 - ✅ ChatBlock custom renderer (5 themes)
 - ✅ Media controls for presentation mode
+
+### Phase 4 Features ✅
+- ✅ Text-to-Speech with full controls (play/pause/stop/speed/voice)
+- ✅ JSON tree viewer with expand/collapse and path copying
+- ✅ Mermaid diagram PNG download
+
+### Phase 5 Features ✅
+- ✅ Presentation Mode with slide detection (split by `---`)
+- ✅ Full-screen slideshow with keyboard/mouse navigation
+- ✅ Drawing tools (pen, highlighter) with canvas overlay
+- ✅ Laser pointer with animated effect
+- ✅ Presentation toolbar with controls
+- ✅ Slide counter display
+
+### Phase 6 Features ✅
+- ✅ Dark/Light mode toggle with system preference detection
+- ✅ In-document search with highlighting (Ctrl+F)
+- ✅ Reading progress tracker with statistics
+- ✅ Word count, character count, and reading time estimates
 
 ---
 
@@ -136,120 +155,163 @@ Transform the browser into a powerful Markdown viewer with presentation capabili
 
 ---
 
-### 🚧 Phase 4: Interactive Features (IN PLANNING)
+### ✅ Phase 4: Interactive Features (COMPLETED)
 **Timeline:** Week 4  
-**Status:** 0% Complete  
+**Status:** 100% Complete  
 **Priority:** Medium
 
-#### 4.1 Text-to-Speech
-- [ ] **TTS Controls**
-  - [ ] Play/pause/stop buttons in toolbar
-  - [ ] Speech rate control slider
-  - [ ] Voice selection dropdown
-  - [ ] Highlight current paragraph being read
-  - [ ] Auto-scroll with speech
-  - **Effort:** Medium | **Priority:** Medium
-
-#### 4.2 JSON Viewer
-- [ ] **JSON Code Block Renderer**
-  - [ ] Detect `json` code blocks
-  - [ ] Collapsible tree view
-  - [ ] Syntax highlighting for JSON
-  - [ ] Copy JSON path on hover
-  - [ ] Expand/collapse all buttons
-  - **Effort:** Medium | **Priority:** Medium
-
-#### 4.3 Additional Mermaid Features
-- [ ] **Download Mermaid as Image**
-  - [ ] Export as PNG/SVG
-  - [ ] Download button on each diagram
-  - **Effort:** Medium | **Priority:** Low
-
-- [ ] **Mermaid Zoom & Pan Controls**
-  - [ ] Zoom in/out buttons
-  - [ ] Fit to container
-  - [ ] Pan/scroll for large diagrams
-  - [ ] Mousewheel zoom support
-  - **Effort:** Medium | **Priority:** Low
+#### Features Delivered
+- [x] **Text-to-Speech Controls**
+  - [x] Play/pause/stop buttons in fixed toolbar
+  - [x] Speech rate control slider (0.5x - 2.0x)
+  - [x] Voice selection dropdown (system voices)
+  - [x] Highlight current paragraph being read (yellow background)
+  - [x] Auto-scroll to keep reading position visible
+  - [x] Reads all paragraphs, headings, and list items
+  
+- [x] **JSON Tree Viewer**
+  - [x] Auto-detect and replace `json` code blocks
+  - [x] Interactive collapsible tree view
+  - [x] Type-based syntax highlighting (string, number, boolean, null)
+  - [x] Copy JSON path on hover for any property
+  - [x] Expand/collapse all buttons in toolbar
+  - [x] Copy entire JSON to clipboard
+  - [x] Clean, readable layout with proper indentation
+  
+- [x] **Mermaid Download Feature**
+  - [x] Download button on each diagram (top-right corner)
+  - [x] Export as PNG format
+  - [x] High-quality output with white background
+  - [x] Timestamp-based filename generation
+  - [x] Client-side Canvas API conversion
 
 **Documentation:**
-- [ ] Phase 4 demo file to be created
+- [x] Phase 4 demo file created with comprehensive examples
+- [x] All features tested and working
 
 ---
 
-### 🎯 Phase 5: Presentation Mode (IN PLANNING)
+### ✅ Phase 5: Presentation Mode (COMPLETED)
 **Timeline:** Week 5  
-**Status:** 0% Complete  
+**Status:** 100% Complete  
 **Priority:** Medium
+
+#### Features Delivered
+
+##### 5.1 Basic Slideshow ✅
+- [x] **Slide Detection & Navigation**
+  - [x] Detect multiple `---` as slide separators
+  - [x] "Presentation Mode" button when detected
+  - [x] Navigation: left click (next), right click (prev), spacebar (next)
+  - [x] Arrow keys navigation (Home/End support)
+  - [x] Slide counter (e.g., "3 / 12")
+  - [x] ESC to exit presentation mode
+  - [x] stopAllMedia() integration on slide change
+
+##### 5.2 Presentation Tools ✅
+- [x] **Drawing & Annotation Tools**
+  - [x] Drawing toolbar in presentation mode
+  - [x] Drawing modes: pen, highlighter
+  - [x] "Clear Drawing" button
+  - [x] Temporary drawings (canvas-based)
+  - [x] HTML5 Canvas overlay
+  
+- [x] **Laser Pointer Mode**
+  - [x] Toggle button in presentation toolbar
+  - [x] Red animated laser pointer effect
+  - [x] Pulsing animation for visibility
+  - [x] Follows mouse movement
+
+##### 5.3 Implementation Details ✅
+- [x] Modular architecture (`lib/presentation-mode.js`)
+- [x] Separate styles (`lib/phase5-styles.css`)
+- [x] Full-screen overlay with dark background
+- [x] Responsive design for all screen sizes
+- [x] Print-friendly output (hides overlays)
 
 **Documentation:**
-- [x] Features documented in `docs/multimedia-features.md`
+- [x] Phase 5 demo file created (`test/phase5-demo.md`) with 21 slides
+- [x] Comprehensive examples including code, diagrams, multimedia
 
 ---
 
-### 🎤 Phase 4: Accessibility & Advanced UI (IN PLANNING)
-**Timeline:** Week 6-7  
-**Status:** 0% Complete  
-**Priority:** Medium
-
-#### 4.1 Text-to-Speech
-- [ ] **TTS with Language Detection**
-  - [ ] Built-in Web Speech API integration
-  - [ ] Auto-detect English/Chinese
-  - [ ] Sticky player that follows scroll
----
-
-### 🎯 Phase 5: Presentation Mode (IN PLANNING)
-**Timeline:** Week 5  
-**Status:** 0% Complete  
-**Priority:** Medium
-
-#### 5.1 Basic Slideshow
-- [ ] **Slide Detection & Navigation**
-  - [ ] Detect multiple `---` as slide separators
-  - [ ] "Presentation Mode" button when detected
-  - [ ] Navigation: left click (next), right click (prev), spacebar (next)
-  - [ ] Arrow keys navigation
-  - [ ] Slide counter (e.g., "3 / 12")
-  - [ ] ESC to exit presentation mode
-  - [ ] stopAllMedia() integration on slide change
-  - **Effort:** Hard | **Priority:** Medium
-
-#### 5.2 Presentation Tools
-- [ ] **Drawing & Annotation Tools**
-  - [ ] Drawing toolbar in presentation mode
-  - [ ] Color palette for pen colors
-  - [ ] Drawing modes: pen, highlighter
-  - [ ] "Reset Drawing" button
-  - [ ] Temporary drawings (not saved)
-  - [ ] HTML5 Canvas overlay
-  - **Effort:** Hard | **Priority:** Low
-
-- [ ] **Laser Pointer Mode**
-  - [ ] Toggle button in presentation toolbar
-  - [ ] Red dot/beam cursor effect
-  - [ ] Trailing effect for visibility
-  - [ ] Color selection option
-  - **Effort:** Medium | **Priority:** Low
-
-**Documentation:**
-- [ ] Phase 5 demo file to be created
-
----
-
-### 📄 Phase 6: Advanced PDF & Layout Features (IN PLANNING)
+### ✅ Phase 6: Advanced UI Features (COMPLETED)
 **Timeline:** Week 6  
+**Status:** 100% Complete  
+**Priority:** High
+
+#### Features Delivered
+
+##### 6.1 Dark Mode Toggle ✅
+- [x] **Theme Management**
+  - [x] System preference detection (`prefers-color-scheme`)
+  - [x] Manual toggle button (☀️/🌙)
+  - [x] LocalStorage persistence
+  - [x] Smooth theme transitions
+  - [x] All components styled for dark mode
+  - [x] Print-friendly (forces light mode)
+
+##### 6.2 Document Search ✅
+- [x] **In-Document Search**
+  - [x] Search overlay with Ctrl+F shortcut
+  - [x] Real-time search highlighting
+  - [x] Navigation between matches (Enter/Shift+Enter)
+  - [x] Match counter ("3 of 15")
+  - [x] ESC to close
+  - [x] Active match highlighting
+  - [x] Text node search (preserves structure)
+
+##### 6.3 Reading Progress ✅
+- [x] **Progress Tracker**
+  - [x] Top progress bar (0-100%)
+  - [x] Expandable stats panel
+  - [x] Word count display
+  - [x] Character count display
+  - [x] Reading time estimate (225 WPM)
+  - [x] Real-time scroll tracking
+  - [x] Responsive design
+
+##### 6.4 Implementation Details ✅
+- [x] Modular architecture (`lib/phase6-features.js`)
+- [x] Separate styles (`lib/phase6-styles.css`)
+- [x] Dark mode support for all features
+- [x] Keyboard accessibility
+- [x] Mobile responsive
+
+**Documentation:**
+- [x] Features integrated into main extension
+- [x] All Phase 6 components tested
+
+---
+
+### 📋 Completed Phases Summary
+
+**Phase 1:** Foundation & Quick Wins ✅  
+**Phase 2:** Enhanced User Experience ✅  
+**Phase 3:** Multimedia Integration ✅  
+**Phase 4:** Advanced Features (TTS, JSON, Mermaid PNG) ✅  
+**Phase 5:** Presentation Mode ✅  
+**Phase 6:** Dark Mode, Search, Reading Progress ✅
+
+**Total Features Delivered:** 40+ features across 6 phases
+
+---
+
+### 🚀 Future Phases (Backlog)
+
+### 📄 Phase 7: Advanced PDF & Layout Features (PLANNED)
+**Timeline:** Week 7-8  
 **Status:** 0% Complete  
 **Priority:** Low
 
-#### 6.1 Layout Options
+#### 7.1 Layout Options
 - [ ] **A4 Page Size Toggle**
   - [ ] Portrait/landscape orientation toggle
   - [ ] Button in top-right corner
   - [ ] Update print styles accordingly
   - **Effort:** Medium | **Priority:** Low
 
-#### 6.2 Metadata Display
+#### 7.2 Metadata Display
 - [ ] **Frontmatter Sidebar**
   - [ ] Parse YAML/TOML frontmatter
   - [ ] Display in toggleable right sidebar
@@ -257,21 +319,14 @@ Transform the browser into a powerful Markdown viewer with presentation capabili
   - [ ] Maintain original key order
   - **Effort:** Medium | **Priority:** Low
 
-#### 5.3 Media Control in Slides
-- [ ] **Auto-stop media on slide change**
-  - [ ] Stop YouTube videos when scrolling away
-  - [ ] Pause audio players
-  - [ ] Prevent background playback
-  - **Effort:** Easy | **Priority:** Medium
-
 ---
 
-### 📝 Phase 6: Advanced PDF & Customization (IN PLANNING)
-**Timeline:** Week 11-12  
+### 📝 Phase 8: Advanced Customization (PLANNED)
+**Timeline:** Week 9-10  
 **Status:** 0% Complete  
 **Priority:** Low
 
-#### 6.1 Advanced PDF Features
+#### 8.1 Advanced PDF Features
 - [ ] **Customizable PDF Header/Footer**
   - [ ] Dialog on Ctrl+P
   - [ ] Input fields for custom text
@@ -320,8 +375,8 @@ Transform the browser into a powerful Markdown viewer with presentation capabili
 
 ### Additional Features (Not Prioritized)
 - [ ] Export to standalone HTML
-- [ ] Dark mode theme toggle
-- [ ] In-document search functionality
+- [x] Dark mode theme toggle ✅ (Phase 6)
+- [x] In-document search functionality ✅ (Phase 6)
 - [ ] Custom print preview
 - [ ] Slide templates for presentations
 - [ ] Export slides as PDF/images
@@ -351,6 +406,10 @@ Transform the browser into a powerful Markdown viewer with presentation capabili
 - ✅ [docs/multimedia-features.md](docs/multimedia-features.md) - Multimedia specs
 - ✅ [docs/advanced-ui-features.md](docs/advanced-ui-features.md) - Advanced UI specs
 - ✅ [test/features-demo.md](test/features-demo.md) - Phase 1 demo file
+- ✅ [test/phase2-demo.md](test/phase2-demo.md) - Phase 2 demo file
+- ✅ [test/phase3-demo.md](test/phase3-demo.md) - Phase 3 demo file
+- ✅ [test/phase4-demo.md](test/phase4-demo.md) - Phase 4 demo file
+- ✅ [test/phase5-demo.md](test/phase5-demo.md) - Phase 5 demo file (21 slides)
 
 ### Planned Documentation
 - [ ] API documentation
@@ -396,24 +455,16 @@ This is an active development project. Features are being implemented in phases 
 - ✅ Core markdown rendering
 - ✅ Mermaid diagram support
 - ✅ Local library files (offline support)
-- ✅ Phase 1 easy features complete
+- ✅ Phase 1-6 complete (40+ features)
+- ✅ Presentation mode with drawing tools
+- ✅ Dark mode toggle
+- ✅ In-document search
+- ✅ Reading progress tracker
 
 ### v1.1.0 - Planned (February 2026)
-- TOC with scroll tracking
-- Syntax highlighting
-- Link confirmation modal
-- Mermaid enhancements
-
-### v1.2.0 - Planned (March 2026)
-- YouTube and audio embedding
-- ChatBlock custom renderer
-- JSON tree viewer
-- TTS support
-
-### v2.0.0 - Planned (April 2026)
-- Presentation mode with slides
-- Drawing and annotation tools
-- Laser pointer mode
+- Advanced PDF export features
+- Frontmatter metadata display
+- Custom CSS themes
 
 ---
 
