@@ -156,7 +156,7 @@ function setupTOCScrollTracking() {
 }
 
 .toc-container.collapsed {
-  transform: translateX(-260px);
+  transform: translateX(-280px);
 }
 
 .toc-header {

@@ -99,8 +99,7 @@ svg {
 }
 
 button svg,
-.toc-title svg,
-.md-parser-badge svg {
+.toc-title svg {
   pointer-events: none;
 }
 
@@ -385,39 +384,6 @@ body {
   margin: 0;
 }
 
-/* MD Badge Indicator */
-.md-parser-badge {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background: linear-gradient(135deg, #0366d6 0%, #0256c5 100%);
-  color: #ffffff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  z-index: 9999;
-  opacity: 0.9;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(3, 102, 214, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.md-parser-badge svg {
-  width: 14px;
-  height: 14px;
-}
-
-.md-parser-badge:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(3, 102, 214, 0.4);
-}
-
 /* Ensure proper first/last child margins */
 .md-parser-container > :first-child {
   margin-top: 0 !important;
@@ -455,19 +421,38 @@ body {
 
 /* Raw Content View */
 pre.raw-content {
-  margin: 20px;
-  padding: 20px;
-  background: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 60px 40px 40px 40px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border: none;
+  border-radius: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.7;
   overflow: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  max-width: 100%;
   box-sizing: border-box;
+  z-index: 500;
+}
+
+/* Light theme raw content */
+[data-theme="light"] pre.raw-content,
+body:not([data-theme="dark"]) pre.raw-content {
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+/* Dark theme raw content */
+[data-theme="dark"] pre.raw-content {
+  background: #0d0d0d;
+  color: #e0e0e0;
 }
 
 /* Code Block Wrapper with Copy Button */
@@ -595,10 +580,6 @@ pre.raw-content {
 
 @media print {
   /* Hide UI elements */
-  .md-parser-badge {
-    display: none !important;
-  }
-  
   .copy-code-btn {
     display: none !important;
   }
@@ -762,7 +743,7 @@ pre.raw-content {
 }
 
 .toc-container.collapsed {
-  transform: translateX(-260px);
+  transform: translateX(-280px);
 }
 
 /* Toggle button stays visible when collapsed */

@@ -123,6 +123,25 @@
   outline-offset: 2px;
 }
 
+/* Disabled state */
+.md-toolbar-btn.disabled,
+.md-toolbar-btn[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.md-toolbar-btn.disabled:hover,
+.md-toolbar-btn[disabled]:hover {
+  background: transparent;
+  transform: none;
+}
+
+.md-toolbar-btn.disabled svg,
+.md-toolbar-btn[disabled] svg {
+  transform: none;
+}
+
 /* Dark Mode Styles */
 [data-theme="dark"] .md-toolbar-group {
   background: rgba(23, 23, 23, 0.98);

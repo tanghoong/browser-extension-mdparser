@@ -456,11 +456,11 @@
     const tocContainer = document.createElement('div');
     tocContainer.className = 'toc-container';
     const tocIconHTML = window.SVGIcons ? window.SVGIcons.getHTML('list') : '📑';
-    const toggleIconHTML = window.SVGIcons ? window.SVGIcons.getHTML('chevronLeft') : '◀';
+    const chevronLeftHTML = window.SVGIcons ? window.SVGIcons.getHTML('chevronLeft') : '◀';
     tocContainer.innerHTML = `
       <div class="toc-header">
         <span class="toc-title">${tocIconHTML} <span>Contents</span></span>
-        <button class="toc-toggle" title="Toggle TOC">${toggleIconHTML}</button>
+        <button class="toc-toggle" title="Toggle TOC">${chevronLeftHTML}</button>
       </div>
       <nav class="toc-nav"></nav>
     `;
@@ -501,7 +501,10 @@
     const toggleBtn = tocContainer.querySelector('.toc-toggle');
     toggleBtn.addEventListener('click', () => {
       tocContainer.classList.toggle('collapsed');
-      toggleBtn.textContent = tocContainer.classList.contains('collapsed') ? '▶' : '◀';
+      // Update icon based on state
+      const chevronRightHTML = window.SVGIcons ? window.SVGIcons.getHTML('chevronRight') : '▶';
+      const chevronLeftHTML = window.SVGIcons ? window.SVGIcons.getHTML('chevronLeft') : '◀';
+      toggleBtn.innerHTML = tocContainer.classList.contains('collapsed') ? chevronRightHTML : chevronLeftHTML;
     });
     
     return tocContainer;
@@ -964,35 +967,6 @@
   }
 
   /**
-   * Setup badge toggle functionality
-   */
-  function setupBadgeToggle(badge, container, rawContent) {
-    badge.style.cursor = 'pointer';
-    
-    badge.addEventListener('click', () => {
-      STATE.isRendered = !STATE.isRendered;
-      
-      if (STATE.isRendered) {
-        // Show rendered view
-        container.style.display = 'block';
-        const rawPre = document.body.querySelector('pre.raw-content');
-        if (rawPre) rawPre.remove();
-        badge.textContent = 'MD';
-        badge.title = 'Rendered by Markdown Parser (Click to view raw)';
-      } else {
-        // Show raw view
-        container.style.display = 'none';
-        const pre = document.createElement('pre');
-        pre.className = 'raw-content';
-        pre.textContent = rawContent;
-        document.body.appendChild(pre);
-        badge.textContent = 'RAW';
-        badge.title = 'Raw Markdown (Click to view rendered)';
-      }
-    });
-  }
-
-  /**
    * Create scroll to top button
    */
   function createScrollToTopButton() {
@@ -1076,19 +1050,11 @@
       container.className = 'md-parser-container';
       container.innerHTML = html;
 
-      // Create badge
-      const badge = document.createElement('div');
-      badge.className = 'md-parser-badge';
-      badge.innerHTML = window.SVGIcons ? window.SVGIcons.getHTML('markdown') : 'MD';
-      badge.title = 'Rendered by Markdown Parser (Click to toggle raw)';
-
       // Add elements to body
       document.body.appendChild(container);
-      document.body.appendChild(badge);
 
       // Store references
       STATE.container = container;
-      STATE.badge = badge;
 
       // Process mermaid diagrams
       await processMermaidDiagrams(container);
@@ -1120,9 +1086,6 @@
       if (window.ChatBlockManager) {
         window.ChatBlockManager.init();
       }
-
-      // Setup badge toggle
-      setupBadgeToggle(badge, container, markdown);
 
       // Create scroll to top button
       createScrollToTopButton();
