@@ -17,8 +17,16 @@
         "<all_urls>",
         "file://*/*"
       ],
-      "js": ["content.js"],
-      "css": ["styles.css"],
+      "js": [
+        "lib/marked.min.js",
+        "lib/mermaid.min.js",
+        "lib/highlight.min.js",
+        "content.js"
+      ],
+      "css": [
+        "styles.css",
+        "lib/highlight-github.min.css"
+      ],
       "run_at": "document_end"
     }
   ],
