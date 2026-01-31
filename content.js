@@ -1061,8 +1061,9 @@
    */
   async function displayRenderedContent(markdown) {
     try {
-      // Store raw content for toggle
+      // Store raw content for toggle (both STATE and global for toolbar)
       STATE.rawContent = markdown;
+      window.__mdParserRawContent = markdown;
       
       // Render markdown to HTML
       const html = renderMarkdown(markdown);

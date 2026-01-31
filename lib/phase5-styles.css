@@ -316,80 +316,49 @@
   pointer-events: all;
 }
 
-/* Laser Pointer with extended trail effect */
+/* Laser Pointer with glow effect - instant movement */
 .laser-pointer {
   position: fixed;
   width: 20px;
   height: 20px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0.4) 50%, transparent 100%);
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.9) 0%, rgba(255, 0, 0, 0.5) 40%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 10003;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
-              0 0 40px rgba(255, 0, 0, 0.6),
-              0 0 60px rgba(255, 0, 0, 0.4);
-  animation: laser-pulse 1s infinite;
-  /* Extended trailing effect */
-  transition: left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.9),
+              0 0 40px rgba(255, 0, 0, 0.7),
+              0 0 60px rgba(255, 0, 0, 0.5),
+              0 0 80px rgba(255, 0, 0, 0.3);
+  animation: laser-pulse 0.8s ease-in-out infinite;
+  /* NO transition - instant movement */
 }
 
-.laser-pointer::before,
-.laser-pointer::after {
+.laser-pointer::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 6px;
+  height: 6px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
   pointer-events: none;
-}
-
-.laser-pointer::before {
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
-  animation: laser-trail-1 0.8s infinite;
-}
-
-.laser-pointer::after {
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 0%, transparent 70%);
-  animation: laser-trail-2 1s infinite;
 }
 
 @keyframes laser-pulse {
   0%, 100% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.9),
+                0 0 40px rgba(255, 0, 0, 0.7),
+                0 0 60px rgba(255, 0, 0, 0.5);
   }
   50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
-}
-
-@keyframes laser-trail-1 {
-  0% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.5);
-  }
-}
-
-@keyframes laser-trail-2 {
-  0% {
-    opacity: 0.4;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0.9;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 1),
+                0 0 50px rgba(255, 0, 0, 0.8),
+                0 0 70px rgba(255, 0, 0, 0.6);
   }
 }
 
@@ -436,6 +405,69 @@
     padding: 8px 16px;
     font-size: 14px;
   }
+}
+
+/* Speaker Notes Panel */
+.slide-notes-panel {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 90%;
+  max-width: 800px;
+  max-height: 250px;
+  background: rgba(23, 23, 23, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 10004;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.slide-notes-panel.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.notes-close {
+  background: transparent;
+  border: none;
+  color: #a3a3a3;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 8px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.notes-close:hover {
+  color: #fff;
+}
+
+.notes-content {
+  padding: 16px;
+  color: #e0e0e0;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-y: auto;
+  max-height: 180px;
+}
+
+.notes-content p {
+  margin: 0 0 12px;
 }
 
 /* Print styles for presentation mode */

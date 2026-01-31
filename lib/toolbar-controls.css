@@ -30,7 +30,7 @@
 .md-toolbar-group {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -46,14 +46,22 @@
               0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
+/* Toolbar Divider */
+.md-toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0 4px;
+}
+
 /* Individual Toolbar Buttons - shadcn/ui style */
 .md-toolbar-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: none;
   border-radius: 6px;
   background: transparent;
@@ -66,24 +74,38 @@
 }
 
 .md-toolbar-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* MD Logo Button - special styling */
+.md-toolbar-btn.md-logo-btn {
+  font-size: 12px;
+  font-weight: 700;
+  color: #171717;
+  width: auto;
+  padding: 0 8px;
+}
+
+.md-toolbar-btn.md-logo-btn svg {
   width: 18px;
   height: 18px;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Hover state */
 .md-toolbar-btn:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 0, 0, 0.06);
   color: #171717;
 }
 
 .md-toolbar-btn:hover svg {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 /* Active/Pressed state */
 .md-toolbar-btn:active {
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.1);
   transform: scale(0.95);
 }
 
@@ -93,18 +115,10 @@
   outline-offset: 2px;
 }
 
-/* Divider between button groups (optional) */
-.md-toolbar-divider {
-  width: 1px;
-  height: 24px;
-  background: rgba(0, 0, 0, 0.08);
-  margin: 0 4px;
-}
-
 /* Dark Mode Styles */
 [data-theme="dark"] .md-toolbar-group {
   background: rgba(23, 23, 23, 0.98);
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
               0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -118,28 +132,207 @@
   color: #a3a3a3;
 }
 
+[data-theme="dark"] .md-toolbar-btn.md-logo-btn {
+  color: #fafafa;
+}
+
 [data-theme="dark"] .md-toolbar-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   color: #fafafa;
 }
 
 [data-theme="dark"] .md-toolbar-btn:active {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 [data-theme="dark"] .md-toolbar-divider {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Compact layout adjustments */
-.md-toolbar {
-  /* Ensure toolbar doesn't interfere with content */
-  user-select: none;
+/* About Modal Styles */
+.md-about-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modal-fade-in 0.2s ease-out;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.md-about-content {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: modal-slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.md-about-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0;
+}
+
+.md-about-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #171717 0%, #404040 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.md-about-close {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #737373;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.md-about-close:hover {
+  color: #171717;
+}
+
+.md-about-content h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #171717;
+  margin: 16px 20px 4px;
+}
+
+.md-about-version {
+  font-size: 13px;
+  color: #737373;
+  margin: 0 20px 16px;
+}
+
+.md-about-desc {
+  font-size: 14px;
+  color: #525252;
+  line-height: 1.6;
+  margin: 0 20px 20px;
+}
+
+.md-about-features,
+.md-about-shortcuts {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.md-about-features h3,
+.md-about-shortcuts h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #737373;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px;
+}
+
+.md-about-features ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.md-about-features li {
+  font-size: 14px;
+  color: #171717;
+  padding: 6px 0;
+}
+
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  font-size: 13px;
+}
+
+.shortcut-grid .key {
+  background: rgba(0, 0, 0, 0.06);
+  color: #171717;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+  font-size: 12px;
+}
+
+.shortcut-grid span:not(.key) {
+  color: #525252;
+}
+
+/* Dark mode for modal */
+[data-theme="dark"] .md-about-content {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .md-about-close:hover {
+  color: #fafafa;
+}
+
+[data-theme="dark"] .md-about-content h2 {
+  color: #fafafa;
+}
+
+[data-theme="dark"] .md-about-desc {
+  color: #a3a3a3;
+}
+
+[data-theme="dark"] .md-about-features,
+[data-theme="dark"] .md-about-shortcuts {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .md-about-features li {
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .shortcut-grid .key {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fafafa;
+}
+
+[data-theme="dark"] .shortcut-grid span:not(.key) {
+  color: #a3a3a3;
 }
 
 /* Update reading stats panel to be more compact */
 .reading-stats-panel {
-  top: 72px !important; /* Position below toolbar */
+  top: 64px !important;
   right: 16px !important;
   border-radius: 10px !important;
   background: rgba(255, 255, 255, 0.98) !important;
@@ -157,7 +350,7 @@
 
 [data-theme="dark"] .reading-stats-panel {
   background: rgba(23, 23, 23, 0.98) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
               0 1px 2px rgba(0, 0, 0, 0.2) !important;
 }
@@ -170,22 +363,26 @@
   }
   
   .md-toolbar-btn {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
   
   .md-toolbar-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
   
   .md-toolbar-group {
     padding: 3px;
-    gap: 2px;
+    gap: 1px;
+  }
+  
+  .md-about-content {
+    max-width: 95%;
   }
 }
 
-/* Hide presentation mode button in toolbar initially if no slides */
+/* Hide presentation mode button in toolbar if no slides */
 .md-toolbar-btn[data-presentation]:not([data-has-slides]) {
   display: none;
 }
