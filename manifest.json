@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "Markdown Parser",
+  "version": "1.0.0",
+  "description": "Automatically detect and render Markdown files in the browser with Mermaid diagram support",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "file://*/*",
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>",
+        "file://*/*"
+      ],
+      "js": [
+        "lib/marked.min.js",
+        "lib/mermaid.min.js",
+        "lib/highlight.min.js",
+        "lib/svg-icons.js",
+        "lib/chat-blocks.js",
+        "lib/presentation-mode.js",
+        "lib/phase6-features.js",
+        "lib/tts-player.js",
+        "lib/toolbar-controls.js",
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/*", "styles.css"],
+      "matches": ["<all_urls>", "file://*/*"]
+    }
+  ]
+}
