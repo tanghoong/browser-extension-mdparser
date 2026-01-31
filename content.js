@@ -14,7 +14,6 @@
   const CONFIG = {
     maxFileSize: 1024 * 1024, // 1MB limit for performance
     mdExtensions: ['.md', '.markdown', '.mdx', '.mdown', '.mkd', '.mkdn'],
-    txtExtensions: ['.txt'],
     mermaidLoaded: false,
     // Delay for file:// URLs to ensure DOM content is ready before detection
     fileUrlLoadDelay: 100,
@@ -68,63 +67,6 @@
   function hasMarkdownExtension(url) {
     const pathname = new URL(url).pathname.toLowerCase();
     return CONFIG.mdExtensions.some(ext => pathname.endsWith(ext));
-  }
-
-  /**
-   * Check if URL ends with text extension
-   */
-  function hasTextExtension(url) {
-    const pathname = new URL(url).pathname.toLowerCase();
-    return CONFIG.txtExtensions.some(ext => pathname.endsWith(ext));
-  }
-
-  /**
-   * Check if content type indicates markdown
-   */
-  function isMarkdownContentType(contentType) {
-    if (!contentType) return false;
-    return contentType.includes('text/markdown') || 
-           contentType.includes('text/x-markdown');
-  }
-
-  /**
-   * Detect if content appears to be Markdown
-   * Checks first few lines for markdown patterns
-   */
-  function looksLikeMarkdown(content) {
-    if (!content || typeof content !== 'string') return false;
-    
-    const lines = content.trim().split('\n').slice(0, 20);
-    const joinedLines = lines.join('\n');
-    
-    // Patterns that indicate markdown content
-    const markdownPatterns = [
-      /^#{1,6}\s+.+/m,           // Headers (# Header)
-      /^---\s*$/m,               // Horizontal rule or frontmatter
-      /^\*{3,}\s*$/m,            // Horizontal rule (asterisks)
-      /^```[\w]*\s*$/m,          // Code block start
-      /^\s*[-*+]\s+.+/m,         // Unordered list items
-      /^\s*\d+\.\s+.+/m,         // Ordered list items
-      /\[.+\]\(.+\)/,            // Links
-      /!\[.*\]\(.+\)/,           // Images
-      /^\s*>\s+.+/m,             // Blockquotes
-      /\*\*.+\*\*/,              // Bold
-      /__.+__/,                  // Bold (underscores)
-      /\*.+\*/,                  // Italic
-      /_.+_/,                    // Italic (underscores)
-      /`[^`]+`/,                 // Inline code
-      /^\|.+\|.+\|/m,            // Tables
-    ];
-
-    let matchCount = 0;
-    for (const pattern of markdownPatterns) {
-      if (pattern.test(joinedLines)) {
-        matchCount++;
-      }
-    }
-
-    // Need at least 2 patterns to be confident it's markdown
-    return matchCount >= 2;
   }
 
   /**
