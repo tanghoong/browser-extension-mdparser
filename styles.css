@@ -1,0 +1,308 @@
+/* Markdown Parser Extension Styles */
+
+/* Reset and base container */
+.md-parser-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  color: #24292e;
+  background-color: #ffffff;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* Typography - Headings */
+.md-parser-container h1 {
+  font-size: 2em;
+  font-weight: 600;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3em;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.md-parser-container h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3em;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.md-parser-container h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.md-parser-container h4 {
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.md-parser-container h5 {
+  font-size: 0.875em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.md-parser-container h6 {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #6a737d;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+/* Paragraphs */
+.md-parser-container p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* Links */
+.md-parser-container a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.md-parser-container a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+.md-parser-container ul,
+.md-parser-container ol {
+  padding-left: 2em;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.md-parser-container li {
+  margin-top: 0.25em;
+}
+
+.md-parser-container li + li {
+  margin-top: 0.25em;
+}
+
+/* Nested lists */
+.md-parser-container ul ul,
+.md-parser-container ul ol,
+.md-parser-container ol ol,
+.md-parser-container ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Blockquotes */
+.md-parser-container blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+  margin: 0 0 16px 0;
+}
+
+.md-parser-container blockquote > :first-child {
+  margin-top: 0;
+}
+
+.md-parser-container blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* Code - Inline */
+.md-parser-container code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+}
+
+/* Code - Block */
+.md-parser-container pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.md-parser-container pre code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+/* Tables */
+.md-parser-container table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.md-parser-container table th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.md-parser-container table td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.md-parser-container table tr {
+  background-color: #ffffff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.md-parser-container table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/* Horizontal Rule */
+.md-parser-container hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+/* Images */
+.md-parser-container img {
+  max-width: 100%;
+  height: auto;
+  box-sizing: content-box;
+  background-color: #ffffff;
+}
+
+/* Task Lists */
+.md-parser-container input[type="checkbox"] {
+  margin: 0 0.2em 0.25em -1.4em;
+  vertical-align: middle;
+}
+
+/* Definition Lists */
+.md-parser-container dl {
+  padding: 0;
+}
+
+.md-parser-container dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.md-parser-container dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+/* Mermaid diagrams */
+.md-parser-container .mermaid {
+  text-align: center;
+  margin: 16px 0;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 6px;
+}
+
+.md-parser-container .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mermaid error display */
+.md-parser-container .mermaid-error {
+  background-color: #fff5f5;
+  border: 1px solid #fc8181;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.md-parser-container .mermaid-error-message {
+  color: #c53030;
+  font-size: 0.875em;
+  margin-bottom: 8px;
+}
+
+.md-parser-container .mermaid-error pre {
+  background-color: #f6f8fa;
+  margin: 0;
+}
+
+/* MD Badge Indicator */
+.md-parser-badge {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #0366d6;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 9999;
+  opacity: 0.8;
+  cursor: default;
+}
+
+.md-parser-badge:hover {
+  opacity: 1;
+}
+
+/* Ensure proper first/last child margins */
+.md-parser-container > :first-child {
+  margin-top: 0 !important;
+}
+
+.md-parser-container > :last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Keyboard shortcuts */
+.md-parser-container kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+/* Abbreviations */
+.md-parser-container abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+  border-bottom: none;
+}
