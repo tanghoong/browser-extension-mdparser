@@ -13,7 +13,7 @@
   // Configuration
   const CONFIG = {
     maxFileSize: 1024 * 1024, // 1MB limit for performance
-    mdExtensions: ['.md', '.markdown', '.mdown', '.mkd', '.mkdn'],
+    mdExtensions: ['.md', '.markdown', '.mdx', '.mdown', '.mkd', '.mkdn'],
     txtExtensions: ['.txt'],
     mermaidLoaded: false,
     // Delay for file:// URLs to ensure DOM content is ready before detection
@@ -316,11 +316,11 @@
       
       wrapper.appendChild(copyCodeBtn);
       
-      // Download as PNG button
+      // Download as SVG button
       const downloadPNGBtn = document.createElement('button');
       downloadPNGBtn.className = 'download-mermaid-btn';
-      downloadPNGBtn.textContent = 'Download PNG';
-      downloadPNGBtn.title = 'Download diagram as PNG image';
+      downloadPNGBtn.textContent = 'Download SVG';
+      downloadPNGBtn.title = 'Download diagram as SVG image';
       
       downloadPNGBtn.addEventListener('click', async () => {
         try {
@@ -404,7 +404,7 @@
                   URL.revokeObjectURL(svgUrl);
                   
                   downloadPNGBtn.textContent = 'Downloaded!';
-                  setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+                  setTimeout(() => downloadPNGBtn.textContent = 'Download SVG', 2000);
                 }, 'image/png');
               } catch (blobError) {
                 // Fallback: Download SVG instead if canvas is tainted
@@ -416,7 +416,7 @@
                 URL.revokeObjectURL(svgUrl);
                 
                 downloadPNGBtn.textContent = 'Downloaded SVG';
-                setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+                setTimeout(() => downloadPNGBtn.textContent = 'Download SVG', 2000);
               }
             } catch (drawError) {
               console.error('Failed to draw image:', drawError);
@@ -427,7 +427,7 @@
           img.onerror = () => {
             console.error('Failed to load SVG for PNG conversion');
             downloadPNGBtn.textContent = 'Error!';
-            setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+            setTimeout(() => downloadPNGBtn.textContent = 'Download SVG', 2000);
             URL.revokeObjectURL(svgUrl);
           };
           
@@ -435,7 +435,7 @@
         } catch (err) {
           console.error('Failed to download PNG:', err);
           downloadPNGBtn.textContent = 'Error!';
-          setTimeout(() => downloadPNGBtn.textContent = 'Download PNG', 2000);
+          setTimeout(() => downloadPNGBtn.textContent = 'Download SVG', 2000);
         }
       });
       
@@ -1147,6 +1147,14 @@
       if (window.ReadingProgressManager) {
         ReadingProgressManager.init();
       }
+      if (window.TTSManager) {
+        TTSManager.init();
+      }
+      
+      // Initialize unified toolbar (after individual features)
+      if (window.ToolbarManager) {
+        ToolbarManager.init();
+      }
 
       // Set page title from first h1 if available
       const h1 = container.querySelector('h1');
@@ -1168,30 +1176,25 @@
 
   /**
    * Main detection and rendering logic
+   * Only processes markdown files (.md, .markdown, .mdx)
    */
   async function main() {
     const url = window.location.href;
     
-    // Check 1: URL has markdown or text extension
-    if (hasMarkdownExtension(url) || hasTextExtension(url)) {
-      // Wait for content to load for file:// URLs (browser may still be loading DOM)
-      if (url.startsWith('file://')) {
-        await new Promise(resolve => setTimeout(resolve, CONFIG.fileUrlLoadDelay));
-      }
-      
-      if (isPlainTextView()) {
-        const content = getRawContent();
-        if (content && content.length <= CONFIG.maxFileSize) {
-          await displayRenderedContent(content);
-          return;
-        }
-      }
+    // ONLY process files with markdown extensions (.md, .markdown, .mdx)
+    // Do NOT process .txt, .html or other file types
+    if (!hasMarkdownExtension(url)) {
+      return; // Exit early if not a markdown file
     }
-
-    // Check 2: Content appears to be markdown (for pages without .md extension)
+    
+    // Wait for content to load for file:// URLs (browser may still be loading DOM)
+    if (url.startsWith('file://')) {
+      await new Promise(resolve => setTimeout(resolve, CONFIG.fileUrlLoadDelay));
+    }
+    
     if (isPlainTextView()) {
       const content = getRawContent();
-      if (content && content.length <= CONFIG.maxFileSize && looksLikeMarkdown(content)) {
+      if (content && content.length <= CONFIG.maxFileSize) {
         await displayRenderedContent(content);
         return;
       }

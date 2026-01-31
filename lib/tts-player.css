@@ -1,0 +1,256 @@
+/**
+ * Text-to-Speech Player Styles
+ * Clean, modern design matching shadcn/ui aesthetic
+ */
+
+.tts-panel {
+  position: fixed;
+  bottom: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1),
+              0 -2px 4px rgba(0, 0, 0, 0.06);
+  z-index: 998;
+  transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 16px;
+}
+
+.tts-panel.tts-visible {
+  bottom: 0;
+}
+
+/* TTS Controls Container */
+.tts-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* TTS Buttons */
+.tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #525252;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.tts-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.04);
+  color: #171717;
+}
+
+.tts-btn:hover:not(:disabled) svg {
+  transform: scale(1.1);
+}
+
+.tts-btn:active:not(:disabled) {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(0.95);
+}
+
+.tts-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tts-btn:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Special styling for play button */
+.tts-play:not(:disabled) {
+  background: #22c55e;
+  color: white;
+}
+
+.tts-play:not(:disabled):hover {
+  background: #16a34a;
+}
+
+/* Close button */
+.tts-close {
+  margin-left: auto;
+}
+
+/* Divider */
+.tts-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0 4px;
+}
+
+/* Rate Control */
+.tts-rate-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.tts-label {
+  font-size: 13px;
+  color: #525252;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tts-slider {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.tts-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.tts-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.tts-rate-value {
+  font-size: 13px;
+  color: #171717;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Status Text */
+.tts-status {
+  font-size: 13px;
+  color: #737373;
+  text-align: center;
+  padding: 4px 0;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .tts-panel {
+  background: rgba(23, 23, 23, 0.98);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3),
+              0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .tts-btn {
+  color: #a3a3a3;
+}
+
+[data-theme="dark"] .tts-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fafafa;
+}
+
+[data-theme="dark"] .tts-btn:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tts-play:not(:disabled) {
+  background: #16a34a;
+  color: white;
+}
+
+[data-theme="dark"] .tts-play:not(:disabled):hover {
+  background: #15803d;
+}
+
+[data-theme="dark"] .tts-divider {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tts-label {
+  color: #a3a3a3;
+}
+
+[data-theme="dark"] .tts-slider {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tts-rate-value {
+  color: #fafafa;
+}
+
+[data-theme="dark"] .tts-status {
+  color: #737373;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tts-panel {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 12px;
+  }
+  
+  .tts-controls {
+    gap: 6px;
+  }
+  
+  .tts-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .tts-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .tts-rate-control {
+    width: 100%;
+    min-width: 100%;
+  }
+}

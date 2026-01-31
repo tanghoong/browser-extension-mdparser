@@ -25,6 +25,8 @@
         "lib/chat-blocks.js",
         "lib/presentation-mode.js",
         "lib/phase6-features.js",
+        "lib/tts-player.js",
+        "lib/toolbar-controls.js",
         "content.js"
       ],
       "css": [
@@ -32,7 +34,9 @@
         "lib/highlight-github.min.css",
         "lib/chat-blocks.css",
         "lib/phase5-styles.css",
-        "lib/phase6-styles.css"
+        "lib/phase6-styles.css",
+        "lib/tts-player.css",
+        "lib/toolbar-controls.css"
       ],
       "run_at": "document_end"
     }
