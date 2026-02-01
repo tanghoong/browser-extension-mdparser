@@ -856,10 +856,107 @@ body:not([data-theme="dark"]) pre.raw-content {
   margin: 20px 0;
 }
 
-/* Mermaid Wrapper with Copy Button */
-.mermaid-wrapper {
+/* Mermaid zoom/pan viewport - mouse wheel zoom, drag to pan */
+.mermaid-zoom-viewport {
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: 6px;
+  min-height: 200px;
   position: relative;
-  margin: 20px 0;
+  background-color: #ffffff;
+  touch-action: none;
+  contain: layout;
+}
+
+.mermaid-zoom-viewport:active {
+  cursor: grabbing;
+}
+
+[data-theme="dark"] .mermaid-zoom-viewport {
+  background-color: #1e1e1e;
+}
+
+/* Position absolute so diagram size changes (on zoom) don't move the viewport */
+.mermaid-zoom-viewport .mermaid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  will-change: transform;
+  transition: none;
+}
+
+/* Mermaid canvas control bar (zoom/pan buttons + tip) */
+.mermaid-canvas-controls {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.mermaid-canvas-controls .mermaid-canvas-btn,
+.mermaid-canvas-controls .mermaid-canvas-tip {
+  pointer-events: auto;
+}
+
+.mermaid-canvas-tip {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 6px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .mermaid-canvas-tip {
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(30, 30, 30, 0.9);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.mermaid-canvas-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.mermaid-canvas-btn:hover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.mermaid-canvas-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+[data-theme="dark"] .mermaid-canvas-btn {
+  background: rgba(45, 45, 45, 0.95);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .mermaid-canvas-btn:hover {
+  background: rgba(60, 60, 60, 0.95);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .copy-mermaid-btn,

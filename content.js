@@ -252,6 +252,161 @@
   }
 
   /**
+   * Setup zoom (mouse wheel) and pan (mouse drag) for a Mermaid diagram viewport.
+   * Uses SVG dimension scaling (not CSS transform scale) so zoom stays sharp.
+   */
+  function setupMermaidZoomPan(viewport, mermaidDiv) {
+    const MIN_SCALE = 0.25;
+    const MAX_SCALE = 4;
+    const ZOOM_FACTOR = 1.15;
+
+    const svgEl = mermaidDiv.querySelector('svg');
+    if (!svgEl) return;
+
+    const bbox = svgEl.getBBox();
+    const baseWidth = bbox.width || parseFloat(svgEl.getAttribute('width')) || 800;
+    const baseHeight = bbox.height || parseFloat(svgEl.getAttribute('height')) || 600;
+
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let isPanning = false;
+    let lastPanX = 0;
+    let lastPanY = 0;
+
+    function applyTransform() {
+      svgEl.setAttribute('width', baseWidth * scale);
+      svgEl.setAttribute('height', baseHeight * scale);
+      mermaidDiv.style.transformOrigin = '0 0';
+      mermaidDiv.style.transform = `translate(${translateX}px, ${translateY}px)`;
+    }
+
+    function zoomAt(cursorX, cursorY, newScale) {
+      const contentX = (cursorX - translateX) / scale;
+      const contentY = (cursorY - translateY) / scale;
+      scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+      translateX = cursorX - contentX * scale;
+      translateY = cursorY - contentY * scale;
+      applyTransform();
+    }
+
+    function zoomIn() {
+      const rect = viewport.getBoundingClientRect();
+      zoomAt(rect.width / 2, rect.height / 2, scale * ZOOM_FACTOR);
+    }
+
+    function zoomOut() {
+      const rect = viewport.getBoundingClientRect();
+      zoomAt(rect.width / 2, rect.height / 2, scale / ZOOM_FACTOR);
+    }
+
+    function resetView() {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    }
+
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const rect = viewport.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left;
+      const cursorY = e.clientY - rect.top;
+      const newScale = e.deltaY < 0 ? scale * ZOOM_FACTOR : scale / ZOOM_FACTOR;
+      zoomAt(cursorX, cursorY, newScale);
+    }, { passive: false });
+
+    viewport.addEventListener('mousedown', (e) => {
+      if (e.button === 0 && !e.target.closest('.mermaid-canvas-controls')) {
+        isPanning = true;
+        lastPanX = e.clientX;
+        lastPanY = e.clientY;
+        viewport.style.cursor = 'grabbing';
+      }
+    });
+
+    const onMouseMove = (e) => {
+      if (!isPanning) return;
+      translateX += e.clientX - lastPanX;
+      translateY += e.clientY - lastPanY;
+      lastPanX = e.clientX;
+      lastPanY = e.clientY;
+      applyTransform();
+    };
+
+    const onMouseUp = () => {
+      if (isPanning) {
+        isPanning = false;
+        viewport.style.cursor = 'grab';
+      }
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mouseleave', onMouseUp);
+    viewport.addEventListener('mouseleave', onMouseUp);
+
+    viewport.addEventListener('dblclick', resetView);
+
+    const controls = document.createElement('div');
+    controls.className = 'mermaid-canvas-controls';
+    controls.setAttribute('role', 'toolbar');
+    controls.setAttribute('aria-label', 'Diagram zoom and pan');
+    const zoomInBtn = document.createElement('button');
+    zoomInBtn.type = 'button';
+    zoomInBtn.className = 'mermaid-canvas-btn';
+    zoomInBtn.innerHTML = (window.SVGIcons && window.SVGIcons.zoomIn) ? window.SVGIcons.getHTML('zoomIn') : '+';
+    zoomInBtn.title = 'Zoom in (or scroll up on diagram)';
+    zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); });
+    const zoomOutBtn = document.createElement('button');
+    zoomOutBtn.type = 'button';
+    zoomOutBtn.className = 'mermaid-canvas-btn';
+    zoomOutBtn.innerHTML = (window.SVGIcons && window.SVGIcons.zoomOut) ? window.SVGIcons.getHTML('zoomOut') : '−';
+    zoomOutBtn.title = 'Zoom out (or scroll down on diagram)';
+    zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); });
+    const resetBtn = document.createElement('button');
+    resetBtn.type = 'button';
+    resetBtn.className = 'mermaid-canvas-btn';
+    resetBtn.innerHTML = (window.SVGIcons && window.SVGIcons.resetView) ? window.SVGIcons.getHTML('resetView') : '⟲';
+    resetBtn.title = 'Reset view (or double-click on diagram)';
+    resetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetView(); });
+    const tip = document.createElement('span');
+    tip.className = 'mermaid-canvas-tip';
+    tip.textContent = 'Scroll to zoom · Drag to pan';
+    tip.title = 'Use mouse wheel on the diagram to zoom; click and drag to pan';
+    controls.appendChild(tip);
+    controls.appendChild(zoomInBtn);
+    controls.appendChild(zoomOutBtn);
+    controls.appendChild(resetBtn);
+    viewport.appendChild(controls);
+
+    applyTransform();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const rect = viewport.getBoundingClientRect();
+        const padding = 32;
+        const availW = Math.max(1, rect.width - padding);
+        const availH = Math.max(1, rect.height - padding);
+        const fitScaleW = availW / baseWidth;
+        const fitScaleH = availH / baseHeight;
+        const fitScale = Math.min(fitScaleW, fitScaleH);
+        scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, fitScale));
+        translateX = 0;
+        translateY = 0;
+        applyTransform();
+        const h = mermaidDiv.offsetHeight;
+        if (h > 0) {
+          viewport.style.height = h + 'px';
+          viewport.style.minHeight = h + 'px';
+          mermaidDiv.style.position = 'absolute';
+          mermaidDiv.style.top = '0';
+          mermaidDiv.style.left = '0';
+        }
+      });
+    });
+  }
+
+  /**
    * Add copy button to Mermaid diagrams
    */
   function addCopyButtonsToMermaid(container) {
@@ -267,8 +422,13 @@
       
       const wrapper = document.createElement('div');
       wrapper.className = 'mermaid-wrapper';
+      const viewport = document.createElement('div');
+      viewport.className = 'mermaid-zoom-viewport';
+      viewport.title = 'Scroll to zoom, drag to pan, double-click to reset';
       mermaidDiv.parentNode.insertBefore(wrapper, mermaidDiv);
-      wrapper.appendChild(mermaidDiv);
+      wrapper.appendChild(viewport);
+      viewport.appendChild(mermaidDiv);
+      setupMermaidZoomPan(viewport, mermaidDiv);
       
       // Copy Code button
       const copyCodeBtn = document.createElement('button');
